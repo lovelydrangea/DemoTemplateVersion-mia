@@ -44,29 +44,78 @@ public:
 		angulo = 0;
 		camara = main;
 		//creamos el objeto skydome
-		sky = new SkyDome(32, 32, 20, (WCHAR*)L"skydome/earth.jpg", main->cameraDetails);
+		sky = new SkyDome(31, 31, 19, (WCHAR*)L"skydome/earth.jpg", main->cameraDetails);
 		//creamos el terreno
-		terreno = new Terreno((WCHAR*)L"skydome/terreno.jpg", (WCHAR*)L"skydome/texterr2.jpg", 400, 400, main->cameraDetails);
+		terreno = new Terreno((WCHAR*)L"skydome/terreno.jpg", (WCHAR*)L"skydome/texterr.jpg", 400, 400, main->cameraDetails);
 		water = new Water((WCHAR*)L"textures/terreno.bmp", (WCHAR*)L"textures/water.bmp", 20, 20, camara->cameraDetails);
 		glm::vec3 translate;
 		glm::vec3 scale;
 		glm::vec3 rotation;
-		translate = glm::vec3(0.0f, 20.0f, 30.0f);
+		translate = glm::vec3(5.0f, terreno->Superficie(17.0f,20.0f), 40.0f);
+		water->setRotY(90);
 		water->setTranslate(&translate);
 		// load models
 		// -----------
 		ourModel.push_back(main);
+		// Modelos Para cargar Aqui //
 		Model* model;
+		//Archivos del Profe agregados
+		//Escritorio
+		model = new Model("models/Furniture2.obj", main->cameraDetails);
+		translate = glm::vec3(0.0f, terreno->Superficie(0.0f, 50.0f), 50.0f);
+		scale = glm::vec3(7.0f, 7.0f, 7.0f);
+		model->setTranslate(&translate);
+		model->setScale(&scale);
+		ourModel.push_back(model);
+		//Arbolino
+		model = new Model("models/Low poly tree assets 1.fbx", main->cameraDetails);
+		translate = glm::vec3(6.0f, terreno->Superficie(6.0f, 50.0f), 50.0f);
+		scale = glm::vec3(3.0f, 3.0f, 3.0f);
+		model->setTranslate(&translate);
+		model->setScale(&scale);
+		ourModel.push_back(model);
+
+		//Casita
+		model = new Model("models/House.obj", main->cameraDetails);
+		translate = glm::vec3(12.0f, terreno->Superficie(12.0f, 60.0f)+4, 3.0f);
+		scale = glm::vec3(1.0f, 1.0f, 1.0f);
+		model->setTranslate(&translate);
+		model->setScale(&scale);
+		ourModel.push_back(model);
+
+		//Monito Negreado
+		model = new Model("models/ARChili.fbx", main->cameraDetails);
+		translate = glm::vec3(1.0f, terreno->Superficie(1.0f, 30.0f)+2.5, 30.0f);
+		scale = glm::vec3(5.0f, 5.0f, 5.0f);
+		rotation = glm::vec3(0.0f, 0.0f, 1.0f); //rotation X
+		model->setRotZ(90); // 90� rotation
+		model->setTranslate(&translate);
+		model->setScale(&scale);
+		ourModel.push_back(model);
+
+		model = new Model("models/Pond Pack.fbx", main->cameraDetails);
+		translate = glm::vec3(4.0f, terreno->Superficie(1.0f, 30.0f) + 2.5, 30.0f);
+		scale = glm::vec3(3.0f, 3.0f, 3.0f);
+		rotation = glm::vec3(0.0f, 0.0f, 1.0f); //rotation X
+		model->setRotZ(90); // 90� rotation
+		model->setTranslate(&translate);
+		model->setScale(&scale);
+		ourModel.push_back(model);
+
+
+		/*
 		model = new Model("models/fogata.obj", main->cameraDetails);
 		translate = glm::vec3(0.0f, 10.0f, 25.0f);
 		model->setTranslate(&translate);
 		rotation = glm::vec3(1.0f, 0.0f, 0.0f); //rotation X
 		model->setRotX(45); // 45� rotation
 		ourModel.push_back(model);
+		
 		model= new Model("models/pez.obj", main->cameraDetails);
 		translate = glm::vec3(0.0f, 7.0f, 50.0f);
 		model->setTranslate(&translate);
 		ourModel.push_back(model);
+
 		model = new Model("models/dancing_vampire.dae", main->cameraDetails);
 		translate = glm::vec3(0.0f, terreno->Superficie(0.0f, 60.0f) , 60.0f);
 		scale = glm::vec3(0.1f, 0.1f, 0.1f);	// it's a bit too big for our scene, so scale it down
@@ -74,12 +123,15 @@ public:
 		model->setScale(&scale);
 		model->setRotY(90);
 		ourModel.push_back(model);
+		
+		//Para agregar animacion monitos
 		try{
 			Animation *ani = new Animation("models/dancing_vampire.dae", model->GetBoneInfoMap(), model->GetBoneCount());
 		    model->setAnimator(new Animator(ani));
 		}catch(...){
 			cout << "Could not load animation!\n";
 		}
+		
 		model = new Model("models/Silly_Dancing.dae", main->cameraDetails);
 		translate = glm::vec3(10.0f, terreno->Superficie(0.0f, 60.0f) , 60.0f);
 		scale = glm::vec3(0.1f, 0.1f, 0.1f);	// it's a bit too big for our scene, so scale it down
@@ -105,6 +157,9 @@ public:
 		model->setTranslate(&translate);
 		model->setScale(&scale);
 		ourModel.push_back(model);
+		*/
+		
+
 		inicializaBillboards();
 	}
 
